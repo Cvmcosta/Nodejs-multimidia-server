@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+
+    <title>NMS</title>
+    
+    <link rel="stylesheet" type="text/css" href="/css/materialize.min.css"  />
+    <link rel="stylesheet" type="text/css" href="/css/icon.css"  />
+    <link rel="stylesheet" type="text/css" href="/css/animate.css"  />
+
+    <link rel="stylesheet" type="text/css" href="/css/app.css"  />
+    
+    <script type="text/javascript" src="/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+</head>
+  <body>
+
+    
+    <div class="container valign-wrapper">
+        <div class="row center-align main_page active_room">
+                <a class="btn-floating btn-large waves-effect waves-light red hoverable" id="video_call"><i class="material-icons">video_call</i></a>
+                
+                <a class="btn-floating btn-large waves-effect waves-light red hoverable" id="message"><i class="material-icons">message</i></a>
+                
+                
+                <div class="input-field col s12">
+                        <input placeholder="" id="username" type="text" class="validate">
+                </div>
+                
+        </div>
+        <div class="row center-align chat_page hide">
+                <a class="btn-floating btn-large waves-effect waves-light red hoverable" id="video_call"><i class="material-icons">video_call</i></a>
+                
+                <a class="btn-floating btn-large waves-effect waves-light red hoverable" id="message"><i class="material-icons">message</i></a>
+                
+                
+                <div class="input-field col s12">
+                        <input placeholder="" id="username" type="text" class="validate">
+                </div>
+                
+        </div>
+        <div class="row center-align video_page hide">
+                <a class="btn-floating btn-large waves-effect waves-light red hoverable" id="video_call"><i class="material-icons">video_call</i></a>
+                
+                <a class="btn-floating btn-large waves-effect waves-light red hoverable" id="message"><i class="material-icons">message</i></a>
+                
+                
+                <div class="input-field col s12">
+                        <input placeholder="" id="username" type="text" class="validate">
+                </div>
+                
+        </div>
+       
+            
+    </div>
+
+    
+    <script src="/js/app.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io()
+
+        socket.on('enter_room', (user) => {
+            _user = user
+            $(document).attr("title", "NMS - " + _user)
+            $("#username").attr("placeholder", _user)
+        })
+
+    
+        $(".btn-floating").click( function(){
+            var user = $("#username").val() ||  $("#username").attr("placeholder")
+            socket.emit($(this).attr("id"), user)  
+        })
+
+
+       
+    </script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+body,html{
+    height: 100%;
+}
+
+.container{
+    height: 100%;
+    overflow: hidden;
+}
+
+.btn-floating{
+    margin: 40px;
+}
+
+#username{
+    text-align: center;
+}
+
