@@ -6,10 +6,18 @@ const socket = require ("socket.io")
 //express library
 const express = require("express")
 const app = express()
+//fs
+const fs = require('fs')
 //setup server
-const server = require('http').createServer(app)
+const server = require('https').createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+  },app)
 //setup client
 const io = socket(server)
+var p2p = require('socket.io-p2p-server').Server;
+io.use(p2p);
+
 //setup id system
 const uniqid = require('uniqid');
 
@@ -21,6 +29,12 @@ const love = require("love-you")
 
 //Routing 
 app.use(express.static(__dirname + '/public'))
+
+//Setup https
+/* app.get("*", function(request, response){
+    response.redirect("https://" + request.headers.host + request.url);
+  }); */
+
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/app.html')
 });
@@ -37,6 +51,7 @@ let users = []
 io.on('connection', (socket) => {
     let socket_id = uniqid()
     let socket_user = love.random()
+
     
     
     while(users.find(user => {return user.username == socket_user})){
@@ -87,7 +102,7 @@ io.on('connection', (socket) => {
     //Entering chat room
     socket.on('message', (username) => {
         change_username(username)
-        socket.emit("enter_room", socket_user)
+        socket.emit("enter_room", socket_user, "chat")
         console.log(socket_user + " joined chat room.")
         console.log(users)
     })
@@ -96,9 +111,23 @@ io.on('connection', (socket) => {
     //Entering video room
     socket.on('video_call', (username) => {
         change_username(username)
-        socket.emit("enter_room", socket_user)
+        socket.emit("enter_room", socket_user, "video")
         console.log(socket_user + " joined video room.")
     })
+
+
+    //Tests star video transmition
+    socket.on('start-stream', function (data) {
+        socket.broadcast.emit('start-stream', data)
+    })
+
+    /* //Tests star video transmition
+    socket.on('ready-client', function () {
+        socket.emit('ready-server')
+    }) */
+
+    
+    
 
 });
 

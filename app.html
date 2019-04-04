@@ -32,26 +32,15 @@
                 
         </div>
         <div class="row center-align chat_page hide">
-                <a class="btn-floating btn-large waves-effect waves-light red hoverable" id="video_call"><i class="material-icons">video_call</i></a>
-                
-                <a class="btn-floating btn-large waves-effect waves-light red hoverable" id="message"><i class="material-icons">message</i></a>
-                
-                
-                <div class="input-field col s12">
-                        <input placeholder="" id="username" type="text" class="validate">
+                <div id="video-container">
+                        <video id="camera-view" width="500" autoplay></video>
                 </div>
                 
         </div>
         <div class="row center-align video_page hide">
-                <a class="btn-floating btn-large waves-effect waves-light red hoverable" id="video_call"><i class="material-icons">video_call</i></a>
-                
-                <a class="btn-floating btn-large waves-effect waves-light red hoverable" id="message"><i class="material-icons">message</i></a>
-                
-                
-                <div class="input-field col s12">
-                        <input placeholder="" id="username" type="text" class="validate">
+                <div id="video-container">
+                        <video id="camera-stream" width="500" autoplay></video>
                 </div>
-                
         </div>
        
             
@@ -59,24 +48,7 @@
 
     
     <script src="/js/app.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const socket = io()
-
-        socket.on('enter_room', (user) => {
-            _user = user
-            $(document).attr("title", "NMS - " + _user)
-            $("#username").attr("placeholder", _user)
-        })
-
+    <script src="/js/bundle.js"></script>
     
-        $(".btn-floating").click( function(){
-            var user = $("#username").val() ||  $("#username").attr("placeholder")
-            socket.emit($(this).attr("id"), user)  
-        })
-
-
-       
-    </script>
   </body>
 </html>
