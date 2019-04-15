@@ -9,10 +9,7 @@ const app = express()
 //fs
 const fs = require('fs')
 //setup server
-const server = require('https').createServer({
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert')
-  },app)
+const server = require('http').createServer(app)
 //setup client
 const io = socket(server)
 var p2p = require('socket.io-p2p-server').Server;
