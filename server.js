@@ -129,4 +129,4 @@ io.on('connection', (socket) => {
 });
 
 
-server.listen(process.env.OPENSHIFT_NODEJS_PORT || 3000,  process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1")
+server.listen(process.env.OPENSHIFT_NODEJS_PORT || 8080,  process.env.OPENSHIFT_NODEJS_IP || "0.0.0.0")
