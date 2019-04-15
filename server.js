@@ -9,7 +9,10 @@ const app = express()
 //fs
 const fs = require('fs')
 //setup server
-const server = require('http').createServer(app)
+const server = require('https').createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+  },app)
 //setup client
 const io = socket(server)
 var p2p = require('socket.io-p2p-server').Server;
@@ -127,6 +130,7 @@ io.on('connection', (socket) => {
     
 
 });
+
 
 
 server.listen(process.env.OPENSHIFT_NODEJS_PORT || 8080,  process.env.OPENSHIFT_NODEJS_IP || "0.0.0.0")
